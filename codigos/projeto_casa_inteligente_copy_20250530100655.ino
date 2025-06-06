@@ -97,6 +97,7 @@ if(senhaD == "pao de batata"){
   Serial.println("destrancado");
   abrirporta();
   delay(5000);
+  fecharporta();
 }
 else{
 Serial.println("Senha incorreta"); 
