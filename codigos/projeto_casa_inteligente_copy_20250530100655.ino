@@ -70,7 +70,7 @@ float umidade = dht.readHumidity();
 }
 
 void abrirporta(){
-motor.write(140);
+motor.write(140); //recomendo usar 120
 delay(3000);
 }
 
