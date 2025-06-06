@@ -16,6 +16,9 @@ const int bagulhotagarela = 12;
 
 Servo motor; //variavel servo
 
+//motor rele
+const int rele = 7;
+
 void acenderledaodetectarpresenca(){ 
 int estadoPIR = digitalRead(PIR);
  
@@ -70,12 +73,24 @@ float umidade = dht.readHumidity();
 }
 
 void abrirporta(){
-motor.write(140); //recomendo usar 120
+motor.write(125);
 delay(3000);
 }
 
 void fecharporta(){
 motor.write(0);
+delay(3000);
+}
+
+void reletrancar(){
+digitalWrite(rele, LOW);
+Serial.println("trancado");
+delay(3000);
+}
+
+void reledestrancar(){
+digitalWrite(rele, HIGH);
+Serial.println("destrancado");
 delay(3000);
 }
 
@@ -91,10 +106,14 @@ void setup()
    dht.begin(); //iniciar o dht 
    LCD.init(); //inicia o LDC 
    LCD.backlight(); //liga o led traseiro
+   pinMode(rele, OUTPUT);
+
+   digitalWrite(rele, LOW);
+
    Serial.println("Sensores sendo calibrados, aguente >:(");
    LCD.setCursor(0, 0);
    LCD.print("Iniciando"); 
-   delay(10000);
+   delay(5000);
    LCD.setCursor(0, 1);
    LCD.print("Obrigado"); 
    Serial.println("Sensores calibrados!");
@@ -106,6 +125,8 @@ void loop()
   //acenderledaodetectarpresenca();
   //verificarvazamentodegas();
   //verificartemperaturaeumidade();
- abrirporta();
- fecharporta();
+ // abrirporta();
+ // fecharporta();
+  reletrancar();
+  reledestrancar();
 }
