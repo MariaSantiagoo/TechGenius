@@ -114,13 +114,9 @@ Serial.begin(9600);
 }
 
 void loop() {
- do{
  
  fecharporta();
  abrirporta(); 
-
- }
- while (contador != 0);
 
 acenderledaodetectarpresenca();
 
