@@ -35,7 +35,7 @@ void setup() {
   motor.write(0);
 
   Serial.begin(9600); 
-
+ delay(5000);
  portaAutomatica();
 }
 
