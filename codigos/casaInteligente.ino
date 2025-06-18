@@ -2,20 +2,17 @@
 //#include <Servo.h>
 
 //acenderledaodetectarpresenca
-const int PIR = 5;
+const int PIR = 4;
 const int led = 2;
 
 //motor rele
-const int rele = 15;
+const int rele = 25;
 
-int contador = 0; // avança para dentro de casa
+int contador = 0;  // avança para dentro de casa
 
 Servo motor;  //variavel servo
 const int servoMotor = 18;
 
-
-int senhaD = 0;
-const int SenhaR = 231;
 
 //verificarvazamentodegas
 const int MQ135 = 34;
@@ -26,38 +23,50 @@ const int bagulhotagarela = 12;
 void reletrancar() {
   digitalWrite(rele, LOW);
   Serial.println("trancado");
+  delay(2000);
 }
 
 void reledestrancar() {
   digitalWrite(rele, HIGH);
   Serial.println("destrancado");
+  delay(2000);
 }
 
 //porta
 
-void fecharporta(){
-//motor.write(0);
+void fecharporta() {
+  motor.write(0);
+  Serial.println("Porta fechada");
+  
 }
 
-void abrirporta(){
-Serial.println("Diigite sua senha");
-while ( ! Serial.available());
-senhaD = Serial.parseInt(); 
+// void abrirporta() {
+//   Serial.println("Diigite sua senha");
+//   while (!Serial.available())
+//     ;
+//   senhaD = Serial.parseInt();
 
-if (senhaD == SenhaR){
-Serial.println("Porta aberta");
-reledestrancar();
-//motor.write(125);
-delay(3000);
-fecharporta();
-contador = 1;
-} 
-else{
-Serial.println("Senha incorreta"); 
-reletrancar();
-fecharporta();
+//   if (senhaD == SenhaR) {
+//     Serial.println("Porta aberta");
+//     reledestrancar();
+//     //motor.write(125);
+//     delay(3000);
+//     fecharporta();
+//     contador = 1;
+//   } else {
+//     Serial.println("Senha incorreta");
+//     reletrancar();
+//     fecharporta();
+//   }
+// }
+
+void abrirporta() {
+
+  motor.write(140);
+  Serial.println("Porta aberta");
+  
 }
-}
+
 
 //led -> luz
 
@@ -97,27 +106,43 @@ void alarme_dois_tons() {
 
 void setup() {
 
-pinMode(led, OUTPUT);
-pinMode(PIR, OUTPUT);
+  pinMode(led, OUTPUT);
+  pinMode(PIR, INPUT);
 
-motor.attach(servoMotor);
-motor.write(0);
+  motor.attach(servoMotor);
+  motor.write(0);
 
-pinMode(rele, OUTPUT);
-digitalWrite(rele, LOW);
+  pinMode(rele, OUTPUT);
+  digitalWrite(rele, HIGH);
 
-pinMode(MQ135, INPUT);
-pinMode(bagulhotagarela, OUTPUT);
-pinMode(rele, OUTPUT);
+  pinMode(MQ135, INPUT);
+  pinMode(bagulhotagarela, OUTPUT);
+  pinMode(rele, OUTPUT);
 
-Serial.begin(9600);
+  Serial.begin(9600);
+
+Serial.println("Carregando");
+delay(7000);
+Serial.println("Carregado com sucesso");
+
+ digitalWrite(rele, LOW);
+
+delay(2000);
+
+ //reledestrancar()
+ //abrirporta();
+ //delay(4000);
+ //fecharporta();
+ //delay(2000);
+ //reletrancar();
 }
 
 void loop() {
- 
- fecharporta();
- abrirporta(); 
-
-acenderledaodetectarpresenca();
-
+ //acenderledaodetectarpresenca();
+ reledestrancar();
+ // abrirporta();
+  //delay(1000);
+ // fecharporta(); 
+  //delay(1000);
+reletrancar();
 }
